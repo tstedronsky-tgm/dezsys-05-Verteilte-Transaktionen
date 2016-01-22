@@ -25,9 +25,7 @@ public class Server {
     public void start() {
         try {
             cSocket = sSocket.accept();
-            System.out.println("Accepted connection from client....");
 
-            // open up IO streams
             in = new DataInputStream(cSocket.getInputStream());
             out = new DataOutputStream(cSocket.getOutputStream());
         } catch (Exception e) {
@@ -50,7 +48,6 @@ public class Server {
 
     public void close() {
         try {
-            // close IO streams, then socket
             System.out.println("Serververbindung getrennt");
 
             cSocket.close();

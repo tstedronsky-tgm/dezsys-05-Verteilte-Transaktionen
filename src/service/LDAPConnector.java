@@ -12,7 +12,7 @@ import java.util.Hashtable;
  * usage: java Simple
  */
 public class LDAPConnector {
-    private DirContext ctx;
+    private static DirContext ctx;
 
     public LDAPConnector(String host, int port,String auth_user,String auth_password) {
         // Set up environment for creating initial context
@@ -58,7 +58,7 @@ public class LDAPConnector {
         String filter = "";
 
         // Search for objects using filter
-        return this.ctx.search( inBase, inFilter, ctls );
+        return ctx.search( inBase, inFilter, ctls );
 
     }
 
@@ -67,7 +67,7 @@ public class LDAPConnector {
             ModificationItem[] mods = new ModificationItem[1];
             Attribute mod0 = new BasicAttribute( inAttribute, inValue );
             mods[0] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE, mod0 );
-            this.ctx.modifyAttributes( inDN, mods );
+            ctx.modifyAttributes( inDN, mods );
         } catch (NamingException e) {
             System.out.println("Authentication nok");
         }
@@ -82,7 +82,6 @@ public class LDAPConnector {
     }
 
     public String getDescription(String desc, String group){
-        System.out.print("test 1");
         try {
             NamingEnumeration result = this.search("dc=nodomain,dc=com", "(&(objectclass=PosixGroup)(cn=group." + group + "))");
             while (result.hasMore()) {
@@ -97,7 +96,7 @@ public class LDAPConnector {
         return null;
     }
 
-    public void closeCTX(){
+    public void closeCTX() {
         try {
 
             // Create initial context
@@ -108,8 +107,6 @@ public class LDAPConnector {
             e.printStackTrace();
         }
     }
-
-    
     /*public static void main(String[] args) {
         LDAPConnector c= new LDAPConnector("192.168.17.128", 389,"cn=admin,dc=nodomain,dc=com", "user");
         System.out.println("Verbinde ...");

@@ -5,10 +5,16 @@ package service;
  */
 public class Start {
     public static void main(String[] args) {
-        LDAPConnector conn= new LDAPConnector("192.168.17.128", 389,"cn=admin,dc=nodomain,dc=com", "user");
-        Service s = new Service(conn);
-        Client_1 c = new Client_1(conn);
+
+        Service s = new Service();
+        Client_1 c = new Client_1();
         s.savePK();
-        c.getPK();
+        c.setPublicKey(c.makePK());
+        s.getServer().start();
+        c.getClient().start();
+        c.sendEncryptSymKey();
+        s.decSK();
+        s.sendEncMes("Hallo Hallo");
+        c.printDecryptedMessage();
     }
 }

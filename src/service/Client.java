@@ -17,9 +17,7 @@ public class Client {
     public Client() {
     }
 
-    /**
-     * Establishes the connection to the server socket
-     */
+
     public void start() {
         try {
             this.socket = new Socket("192.168.17.128", 55555);
